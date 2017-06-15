@@ -1,0 +1,50 @@
+body { margin: 0;  }
+
+#popup {
+  display: none;
+}
+
+#popup-bg{
+  position:fixed;
+  top: 0;
+  width:100%;
+  height:100%;
+}
+
+#popup-fg{
+  max-width: 20em;
+  background: #ddd;
+  margin: 0 20px 0 auto;
+  padding: 2em;
+  z-index: 1;
+  position: absolute;
+  left: 20px;
+  right: 0;
+  border: solid 2px black;
+}
+
+#login {
+  float: right;
+  margin: -4em 4em;
+}
+
+#popup {
+  
+  input, label {
+    display: block;
+    width: 100%;
+  }
+  
+  label {
+    margin-top: 1em;
+  }
+
+  .actions {
+    text-align: center;
+    margin-top: 1em;
+  }
+}
+
+
+
+
