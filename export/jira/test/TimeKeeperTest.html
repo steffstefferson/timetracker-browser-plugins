@@ -1,0 +1,66 @@
+<html>
+
+
+<script src="https://www.gstatic.com/firebasejs/4.1.1/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyALjRI8A14Gyq_VrC0yDxdcI7cB-SHjd30",
+    authDomain: "timekeeper-78124.firebaseapp.com",
+    databaseURL: "https://timekeeper-78124.firebaseio.com",
+    projectId: "timekeeper-78124",
+    storageBucket: "timekeeper-78124.appspot.com",
+    messagingSenderId: "293719761096"
+  };
+  firebase.initializeApp(config);
+  
+  function toSeconds(jiraTime){
+  jiraTime = jiraTime.toLowerCase();
+
+  var hours = +(jiraTime.match(/\d+h/g) && jiraTime.match(/\d+h/g)[0].replace("h","")) || 0;
+  var minutes = +(jiraTime.match(/\d+m/g) && jiraTime.match(/\d+m/g)[0].replace("m","")) || 0;
+  var weeks = +(jiraTime.match(/\d+w/g) && jiraTime.match(/\d+w/g)[0].replace("w","")) || 0;
+  var days = +(jiraTime.match(/\d+d/g) && jiraTime.match(/\d+d/g)[0].replace("d","")) || 0;
+  var seconds = +(jiraTime.match(/\d+s/g) && jiraTime.match(/\d+s/g)[0].replace("s","")) || 0;
+
+  return seconds + minutes * 60 + hours * 60 * 60 + days * 60 * 60 * 8.5 + weeks * 60 * 60 * 8.5 * 5;
+  
+  }
+  
+  function testInsert(){
+		var timeSpent = "3h 2d 14m";
+		var workingDate = new Date().getTime();
+		var userKey = "AIzaSywww8A14Gyq_VrCqqqqdcI7cB";
+		
+		const url = "jira.post.ch/EPO-12444";
+		const regex = /[a-zA-Z]{3}-\d{1,7}/g;
+		var title = url.match(regex)[0];
+		
+		var sec =  toSeconds(timeSpent);
+		
+		insertFor(userKey,title,workingDate,timeSpent);
+  }
+  
+  function insertFor(userKey,title,workingDate,timeSpent){
+		console.log('insertFor: ',{userKey,title,workingDate,timeSpent});
+
+		  firebase.database().ref('users/' + userKey+'/'+workingDate).set({
+			title: title,
+			workingDate: workingDate,
+			timeSpentInSeconds : timeSpent
+		  });
+	}
+ 
+  
+</script>
+
+<body>
+
+<input type="button" onclick="testInsert();" value="testInsert" />
+
+
+</body>
+
+
+</html>
+
